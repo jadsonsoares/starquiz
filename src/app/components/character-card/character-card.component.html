@@ -1,0 +1,105 @@
+<div class="card" [class.bg-success]="is_correct" [class.bg-light]="!is_correct">
+  <img class="card-img-top" [src]="character.image" alt="Random first slide">
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2">
+        <button class="btn btn-primary" (click)="open(content)">
+          <i class="fas fa-question"></i>
+        </button>
+      </div>
+      <div class="col-10">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="{{ 'you_know_me' | translate }}"
+          (keyup)="youKnow($event)"
+          [(ngModel)]="charName"
+          [class.correct]="is_correct"
+          [disabled]="is_correct">
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ 'details' | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-5">
+        <ngb-carousel *ngIf="character.images">
+            <ng-template *ngFor="let image of character.images" ngbSlide>
+              <img class="card-img-top" [src]="image" alt="Random first slide">
+            </ng-template>
+        </ngb-carousel>
+      </div>
+      <div class="col-7">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>{{ 'birth_year' | translate }}</th>
+            <td>{{character.birth_year}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'eye_color' | translate }}</th>
+            <td>{{character.eye_color}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'gender' | translate }}</th>
+            <td>{{character.gender}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'hair_color' | translate }}</th>
+            <td>{{character.hair_color}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'height' | translate }}</th>
+            <td>{{(character.height / 100).toFixed(2)}} m</td>
+          </tr>
+          <tr>
+            <th>{{ 'homeworld_text' | translate }}</th>
+            <td>{{character.homeworld_text}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'mass' | translate }}</th>
+            <td>{{character.mass}} Kg</td>
+          </tr>
+          <tr>
+            <th>{{ 'skin_color' | translate }}</th>
+            <td>{{character.skin_color}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'species' | translate }}</th>
+            <td>{{character.species}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <th>{{ 'films' | translate }}</th>
+            <td>{{character.films.join(', ')}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'vehicles' | translate }}</th>
+            <td>{{character.vehicles.join(', ')}}</td>
+          </tr>
+          <tr>
+            <th>{{ 'starships' | translate }}</th>
+            <td>{{character.starships.join(', ')}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('')">{{ 'close' | translate }}</button>
+  </div>
+</ng-template>

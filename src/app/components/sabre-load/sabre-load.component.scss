@@ -1,0 +1,461 @@
+//colors
+$bek: #2E3643;
+$glowee: #43ccfe;
+$wyt: #fff;
+
+$gry: #BFC0C0;
+$gol: #D18710;
+
+$widthProg: 0;
+
+$lightgry: lighten($gry,20%);
+
+$darkgry: darken($gry,20%);
+$darkdarkgry: darken($gry,40%);
+$darkdarkdarkgry: darken($gry,60%);
+$darkdarkdarkdarkgry: darken($gry,70%);
+
+$lightgol: lighten($gol,40%);
+$darkgol: darken($gol,20%);
+$darkdarkgol: darken($gol,30%);
+
+
+$dedgol: desaturate($gol,40%);
+$lightdedgol: desaturate($lightgol,40%);
+
+*,*:before,*:after{
+  box-sizing: border-box;
+}
+
+//@param: $position is duh the position you want or null if nah,
+//@param: $which is if u want 'before', 'after', or 'both' or null if nah
+@mixin before-and-after($position, $which) {
+	@if($position != null){
+		position: $position;
+	}
+
+	$selector: '';
+	@if($which==before) {
+		$selector: '&:'+$which;
+	}
+	@else if($which==after) {
+		$selector: '&:'+$which;
+	}
+	@else if($which==both) {
+		$selector: '&:before,&:after';
+	}
+	@if($which != null){
+		#{$selector} {
+			content: "";
+			display: block;
+			@if($position !=static) {
+				position: absolute;
+			}
+		}
+	}
+}
+
+%silverlight{
+    background: linear-gradient(to bottom, $gry 20%,$darkgry 30%,$gry 50%,$gry 60%,$darkdarkgry 90%);
+    border: .0625em solid $darkdarkgry;
+    border-radius: .125em;
+}
+
+%blacklight{
+    background: linear-gradient(to bottom, $darkdarkdarkgry 20%,$darkdarkdarkdarkgry 25%,$darkdarkdarkgry 40%,$darkdarkdarkgry 45%,$darkdarkdarkdarkgry 90%);
+    border: .0625em solid $darkdarkdarkdarkgry;
+}
+
+
+body{
+  background: $bek;
+  min-width: 30em;
+  height: 100vh;
+  min-height: 8em;
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  color: $gry;
+  text-align: center;
+}
+
+#container{
+  padding: 1em 0;
+  width: 28em;
+  height: 5em;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+p{
+  line-height: 2;
+
+  &.replay{
+    bottom: 1.25em;
+    cursor: pointer;
+    width: 4em;
+    height: 4em;
+    margin: .5em auto 0;
+    overflow: hidden;
+    text-indent: -9999px;
+    display: none;
+    @include before-and-after(relative,both);
+
+    &:before,&:after{
+      transition: border-color ease-in-out .5s;
+    }
+
+    &:before{
+      border-radius: 50%;
+      width: 3em;
+      height: 3em;
+      margin: auto;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      top: 0;
+      border: .125em solid mix($wyt,$bek,45%);
+      border-left: .125em solid transparent;
+    }
+
+    &:after{
+      border: .125em solid transparent;
+      width: 1em;
+      height: 1em;
+      border-left-color: mix($wyt,$bek,45%);
+      border-bottom-color: mix($wyt,$bek,45%);
+      top: .125em;
+      left: .875em;
+      transform-origin: bottom left;
+      transform: rotate(1.25deg);
+    }
+
+    &:hover{
+      transform: rotate(-360deg);
+      transition: all ease-in-out .75s;
+
+      &:before{
+
+      border: .125em solid $wyt;
+      border-left: .125em solid transparent;
+      }
+      &:after{
+        border-left-color: $wyt;
+        border-bottom-color: $wyt;
+      }
+    }
+  }
+
+  .no-js &#loading span{
+    font-size: 0;
+
+    &:after{
+      font-size: 1rem;
+      font-size: 16px;
+      display: inline;
+      content: "0";
+      animation: loadnumber 5s linear 1s infinite;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+#loading{
+  color: #FFF;
+}
+
+#lightsaber{
+  // outline: 1px solid;
+  position: relative;
+  margin-bottom: 2em;
+  height: 1em;
+
+  &>*{
+    @include before-and-after(absolute,both);
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+  }
+
+  & *{
+    height: inherit;
+  }
+
+  .progress{
+    background: darken($bek, 5%);
+    width: 100%;
+    left: 11.75em;
+    top: -1em;
+    bottom: -1em;
+    margin: auto;
+    height: 1.5em;
+    width: 19.25em;
+    border-radius: 0 .75em .75em 0;
+
+    .glow-light{
+
+      width: $widthProg;
+      position: absolute;
+      left: -.3125em;
+      top: -1em;
+      bottom: -1em;
+      margin: auto;
+      transition: all ease-in-out .5s;
+      box-shadow:
+        inset -.25em 0 .25em .25em $glowee,
+        0 0 .25em 0 $glowee,
+        0 0 1em .0625em rgba($glowee,.5);
+      height: .875em;
+      background: $wyt;
+      border-radius: 0 .5em .5em 0;
+
+      .no-js &{
+        animation: growth 5s linear 1s infinite;
+        animation-fill-mode: forwards;
+      }
+    }
+  } //end progress
+
+  .handle{
+    &>*{
+      @include before-and-after(absolute,both);
+      position: absolute;
+      bottom: -1em;
+      top: -1em;
+      margin: auto;
+    }
+
+    .buttplug{
+      width: 1em;
+      @extend %silverlight;
+
+      &:before{
+        height: .375em;
+        width: .5em;
+        margin: auto;
+        right: 0;
+        left: 0;
+        top: -.125em;
+        background: $lightgry;
+        border: .0625em solid $gry;
+        box-shadow:  0 .875em 0 -.0625em $lightgry, 0 .875em 0 0 $gry;
+      }
+
+    }//end buttplug
+
+    .butt{
+      width: 1.25em;
+      left: 1em;
+      border-radius: .125em;
+      @extend %blacklight;
+
+      &:before{
+        width: .5em;
+        height: .5em;
+        border-radius: 50%;
+        background: linear-gradient($darkdarkgry 0%,$darkdarkdarkgry 100%);
+        border:.0625em solid $darkdarkdarkgry;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        box-shadow:
+          0 0 0 .0625em $darkdarkdarkdarkgry,
+          0 .0625em 0 .125em $darkdarkdarkdarkgry
+          ;
+      }
+
+      &:after{
+        width: .25em;
+        height: .25em;
+        background: $darkdarkdarkdarkgry;
+        border-radius: 50%;
+        right: 0;
+        left: 0;
+        bottom: .125em;
+        margin: 0 auto;
+      }
+    }//end butt
+
+    .above-butt{
+      left: 2.25em;
+      width: 1.25em;
+      @extend %silverlight;
+
+      &:before{
+        width: inherit;
+        right: -.125em;
+        left: -.125em;
+        margin: auto;
+        height: .625em;
+        top: -.5em;
+        border: .0625em solid $gry;
+        background: linear-gradient($darkdarkgry 0%,$gry 75%);
+      }
+    }//end above butt
+
+    .coily-light{
+      left: 3.5em;
+      width: 2.5em;
+      height: .875em;
+      @extend %blacklight;
+      background: linear-gradient($darkdarkdarkgry 0%, $darkdarkdarkgry 10%, $darkdarkdarkdarkgry 50%, $darkdarkdarkgry 85%, $darkdarkdarkdarkgry 100%);
+
+      &:before, &:after{
+        height: 1.0625em;
+        bottom: -1em;
+        top: -1em;
+        margin: auto;
+      }
+
+      &:before{
+        background: linear-gradient($darkdarkdarkgry 0%, $darkdarkdarkdarkgry 50%);
+        width: .25em;
+        border-radius: 0 .25em .25em 0;
+        border: .0625em solid $darkdarkdarkdarkgry;
+        left:-.0625em;
+
+      }
+
+      &:after{
+        width: .125em;
+        left: .25em;
+        box-shadow:
+          .25em 0 0 0 $darkdarkdarkdarkgry,
+          .5em 0 0 0 $darkdarkdarkdarkgry,
+          .75em 0 0 0 $darkdarkdarkdarkgry,
+          1em 0 0 0 $darkdarkdarkdarkgry,
+          1.25em 0 0 0 $darkdarkdarkdarkgry,
+          1.5em 0 0 0 $darkdarkdarkdarkgry,
+          1.75em 0 0 0 $darkdarkdarkdarkgry,
+          2em 0 0 0 $darkdarkdarkdarkgry,
+          ;
+        background: $darkdarkdarkdarkgry;
+      }
+    }
+
+    .gold-thing{
+      border-top: .0625em solid $dedgol;
+      border-bottom: .0625em solid $dedgol;
+      width: .75em;
+      height: .625em;
+      background: linear-gradient($lightdedgol 0%, $lightdedgol 10%, $dedgol 50%, $lightdedgol 85%, $dedgol 100%);
+      left: 6em;
+
+      &:before{
+        width: .5em;
+        height: 1em;
+        left: 100%;
+        background: linear-gradient($lightdedgol 0%, $lightdedgol 10%, $dedgol 50%, $lightdedgol 85%, $dedgol 100%);
+        border: .0625em solid $dedgol;
+        bottom: -1em;
+        top: -1em;
+        margin: auto;
+      }
+    }
+
+    .other-gold-thing{
+      height: .625em;
+      width: .5em;
+      background: linear-gradient($gol 0%, $gol 10%, $darkgol 50%, $gol 70%, $darkdarkgol 100%);
+      left: 7.25em;
+      border-top: .0625em solid $darkgol;
+      border-bottom: .0625em solid $darkgol;
+
+      &:before{
+        @extend %silverlight;
+        border-right: 0;
+        left: 100%;
+        width: .25em;
+        height: .875em;
+        top: -1em;
+        bottom: -1em;
+        margin: auto;
+        border-radius: 0;
+      }
+    }
+
+    .fin{
+      left: 8em;
+      width: .5em;
+      @extend %silverlight;
+      border-radius: 0;
+
+      &:before,&:after{
+        top: -1em;
+        bottom: -1em;
+        margin: auto;
+      }
+
+      &:before{
+        width: .25em;
+        height: 1em;
+        @extend %silverlight;
+        border-radius: 0;
+        left: 100%;
+        height: 1.25em;
+      }
+
+      &:after{
+        width: .125em;
+        background: $darkdarkgry;
+        left: .5625em;
+        height: 1.5em;
+      }
+    }//end handle end
+  }//end handle
+
+
+}//end lightsaber
+
+a{
+  position: absolute;
+  bottom: 1em;
+  left: 1em;
+  margin: auto;
+  color: $gry;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: .75em;
+  display: block;
+  padding: .75em;
+  border: .125em solid $gry;
+  transition: all ease-in-out .5s;
+
+  &:hover{
+    border-color: $wyt;
+    background: $wyt;
+    color: $bek;
+  }
+}
+
+@keyframes loadnumber{
+  @for $i from 0 through 100{
+    @if($i >= 0 and $i <= 50) {
+      #{$i}%{
+        content: "#{$i * 2}";
+      }
+    }@elseif($i > 50){
+      #{$i}%{
+        content: "100";
+      }
+    }
+  }
+}
+
+@keyframes growth{
+  @for $i from 0 through 100{
+    @if($i >= 0 and $i <= 50) {
+      #{$i}%{
+        width: #{$i * 2} + '%';
+      }
+    }@elseif($i > 50){
+      #{$i}%{
+        width: 100%;
+      }
+    }
+  }
+}

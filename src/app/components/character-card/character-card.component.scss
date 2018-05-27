@@ -1,0 +1,13 @@
+.card-img-top{
+  height: 250px;
+  max-width: 346px;
+  margin: 1px;
+}
+input.correct{
+  border-color: #28a745;
+}
+input.correct:focus {
+  border-color: rgba(40, 167, 69, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(40, 167, 69, 0.6);
+  outline: 0 none;
+}

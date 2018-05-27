@@ -1,0 +1,25 @@
+<app-sabre-load
+[startLoad]="startLoad"
+[class.d-none]="endLoad"
+[totalItems]="totalItems"
+[currentQty]="possLoad"></app-sabre-load>
+
+<div class="container" [class.d-none]="showQuiz()">
+  <div class="row">
+    <div class="col-12">
+      <app-timer-countdown class="float-right" [startTimer]="playing && endLoad" (endTimer)="endQuiz($event)"></app-timer-countdown>
+    </div>
+  </div>
+  <div class="row align-items-start">
+    <div class="col-6 col-sm-6 col-md-5 col-lg-4 mb-4" *ngFor="let character of characters | paginate: { itemsPerPage: 6, currentPage: p }">
+      <app-character-card [character]="character" (completed)="addScore($event)" [cleaing]="playing"></app-character-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-center">
+      <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+
+<app-quiz-result [class.d-none]="!showScore" (playAgain)="onPlayAgain($event)" [score_total]="score_total"></app-quiz-result>

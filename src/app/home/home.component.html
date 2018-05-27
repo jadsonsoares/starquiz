@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-11 text-right">
+      <a href="#" (click)="changeLang('pt-br')">
+        <img class="img-fluid" src="/assets/image/brazil_flag.png">
+      </a>
+      <a href="#" (click)="changeLang('en')">
+        <img class="img-fluid" src="/assets/image/usa_flag.png">
+      </a>
+    </div>
+    <div class="col-12 text-center">
+      <img class="img-fluid" src="/assets/image/background.jpg">
+      <h1>StarQuiz!</h1>
+      <h3 [innerHTML]="'home_text' | translate"></h3>
+      <button class="btn btn-success" (click)="start()">
+        <h4>Start</h4>
+      </button>
+    </div>
+  </div>
+</div>
+
