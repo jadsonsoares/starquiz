@@ -22,9 +22,7 @@ export class SabreLoadComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(ch) {
-    console.log(ch);
     if (ch.startLoad && ch.startLoad.currentValue) {
-      console.log('start');
       setTimeout(() => this.progAnimate(), 1000);
     }
   }

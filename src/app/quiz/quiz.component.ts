@@ -31,8 +31,6 @@ export class QuizComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this._service.get('people').subscribe((res: SwapiResult) => {
-      console.log(res);
-
       this.characters = res.results;
       this.totalItems = res.count;
       this.possLoad = this.possLoad + res.results.length;
@@ -62,8 +60,6 @@ export class QuizComponent implements OnInit, OnChanges {
   getPagination() {
     if (this.nextPage !== '') {
       this._service.get_by_url(this.nextPage).subscribe((res: SwapiResult) => {
-        console.log(res);
-
         this.possLoad = this.possLoad + res.results.length;
 
         res.results.forEach(character => this.characters.push(character));
@@ -107,13 +103,9 @@ export class QuizComponent implements OnInit, OnChanges {
     if (event) {
 
       this.playing = false;
-
-      console.log(this.score);
       // tslint:disable-next-line:forin
       for (const el in this.score) {
-        console.log(el);
         this.score_total = this.score_total + parseInt(this.score[el]);
-
       }
 
       this.showScore = true;
