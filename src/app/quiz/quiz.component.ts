@@ -130,6 +130,7 @@ export class QuizComponent implements OnInit, OnChanges {
 
     this.playing = true;
     this.showScore = false;
+    this.p = 0;
   }
 
   showQuiz() {
